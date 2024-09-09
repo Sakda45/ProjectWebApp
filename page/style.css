@@ -1,0 +1,17 @@
+body{
+    background-color: rgb(213, 255, 213) !important;
+}
+.navbar-color {
+    background-color: rgb(0, 134, 11); /* ใช้ !important เพื่อบังคับ */
+}
+.buttom-costum {
+    background-color: rgb(0, 134, 11) !important; /* ใช้ !important เพื่อบังคับ */
+    color: rgb(255, 255, 255) !important;
+}
+.navbar-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* เพื่อให้แน่ใจว่า navbar อยู่ด้านบนของเนื้อหาอื่น */
+}
