@@ -1,0 +1,4 @@
+body {
+    background-color: rgb(49, 167, 72) !important; /* ใช้ !important เพื่อบังคับ */
+    color: white !important; /* ทำให้ตัวอักษรเป็นสีขาว */
+}
