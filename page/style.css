@@ -1,8 +1,10 @@
 body{
     background-color: rgb(213, 255, 213) !important;
+    
 }
 .navbar-color {
-    background-color: rgb(0, 134, 11); /* ใช้ !important เพื่อบังคับ */
+    background-color: rgb(0, 134, 11);
+    color: rgb(255, 255, 255) !important; /* ใช้ !important เพื่อบังคับ */
 }
 .buttom-costum {
     background-color: rgb(0, 134, 11) !important; /* ใช้ !important เพื่อบังคับ */
@@ -14,4 +16,21 @@ body{
     left: 0;
     width: 100%;
     z-index: 1000; /* เพื่อให้แน่ใจว่า navbar อยู่ด้านบนของเนื้อหาอื่น */
+}
+
+.custom-width {
+    width: 500px;
+    height: 440px;
+    background-color: rgb(241, 241, 241) !important;
+}
+.custom-width-register {
+    width: 500px;
+    height: 660px;
+    background-color: rgb(241, 241, 241) !important;
+}
+.custom-width-index {
+    width: 500px;
+    height: 470px;
+    background-color: rgb(0, 134, 11) !important; /* ใช้ !important เพื่อบังคับ */
+    color: rgb(255, 255, 255) !important;
 }
