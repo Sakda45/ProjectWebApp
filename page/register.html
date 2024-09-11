@@ -31,62 +31,71 @@
         <div class="custom-width-register bg-light border rounded shadow p-4">
             <div class="container text-center">
                 <div class="row align-items-start">
-                  <div class="col">
-                    <a type="submit" class="link-offset-2 link-underline link-underline-opacity-0"  href="login.html">
-                        <i class="fa-solid fa-chevron-left"></i> กลับ 
-                    </a>
-                  </div>
-                  <div class="col"></div>
-                  <div class="col"></div>
-                  <div class="col"></div>
-                  <div class="col">
-                    <a class="link-custom" href="register.html">
-                        <i class="fa-solid fa-rotate-right"  style="text-align: end;"></i> รีเซ็ต
-                    </a>
-                  </div>
+                    <div class="col">
+                        <a type="submit" class="link-offset-2 link-underline link-underline-opacity-0" href="login.html">
+                            <i class="fa-solid fa-chevron-left"></i> กลับ 
+                        </a>
+                    </div>
+                    <div class="col"></div>
+                    <div class="col"></div>
+                    <div class="col"></div>
+                    <div class="col">
+                        <a class="link-custom" href="register.html">
+                            <i class="fa-solid fa-rotate-right" style="text-align: end;"></i> รีเซ็ต
+                        </a>
+                    </div>
                 </div>
-              </div>
+            </div>
             <center><br><h3>สมัครสมาชิก</h3></center>
-                    <form action="register.php" method="POST">  
-                        <div class="mb-2">
-                            <label for="nameInput" class="form-label">ชื่อ</label>
-                            <input type="text" class="form-control" id="nameInput" name="name" required>
-                        </div>    
-                        <div class="mb-2">
-                            <label for="lnameInput" class="form-label">สกุล</label>
-                            <input type="text" class="form-control" id="lnameInput" name="lastname" required>
-                        </div>
-                        <div class="mb-2">
-                            <label for="telNumberInput" class="form-label">เบอร์โทรศัพท์</label>
-                            <input type="text" class="form-control" id="telNumberInput" name="phone" required>
-                        </div>      
-                        <div class="mb-2">
-                            <label for="emailInput" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="emailInput" name="email" required>
-                            <div id="error-message" style="color: brown;" ></div>
-                        </div>
-                        <div class="mb-2">
-                            <label for="PassInput" class="form-label">รหัสผ่าน</label>
-                            <input type="password" class="form-control" id="PassInput" name="password" required>
-                        </div>
-                        <div class="mb-4">
-                            <label for="ConPassInput" class="form-label">ยืนยันรหัสผ่าน</label>
-                            <input type="password" class="form-control" id="ConPassInput" name="confirm_password" required>
-                        </div>
-                        <center>
-                            <div>
-                                <button type="submit" class="btn buttom-costum w-50 mb-4">สมัคร</button>
-                            </div>
-                 
-                        </center>
-                    </form>
+            <form id="registerForm" action="register.php" method="POST">  
+                <div class="mb-2">
+                    <label for="nameInput" class="form-label">ชื่อ</label>
+                    <input type="text" class="form-control" id="nameInput" name="name" required>
+                </div>    
+                <div class="mb-2">
+                    <label for="lnameInput" class="form-label">สกุล</label>
+                    <input type="text" class="form-control" id="lnameInput" name="lastname" required>
+                </div>
+                <div class="mb-2">
+                    <label for="telNumberInput" class="form-label">เบอร์โทรศัพท์</label>
+                    <input type="text" class="form-control" id="telNumberInput" name="phone" required>
+                </div>      
+                <div class="mb-2">
+                    <label for="emailInput" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="emailInput" name="email" required>
+                    <div id="error-message" style="color: brown;"></div>
+                </div>
+                <div class="mb-2">
+                    <label for="PassInput" class="form-label">รหัสผ่าน</label>
+                    <input type="password" class="form-control" id="PassInput" name="password" required>
+                </div>
+                <div class="mb-4">
+                    <label for="ConPassInput" class="form-label">ยืนยันรหัสผ่าน</label>
+                    <input type="password" class="form-control" id="ConPassInput" name="confirm_password" required>
+                </div>
+                <center>
+                    <div>
+                        <button type="submit" class="btn buttom-costum w-50 mb-4">สมัคร</button>
+                    </div>
+                </center>
+            </form>
             <br><br>
         </div>
     </div>
     <script>
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            const password = document.getElementById('PassInput').value;
+            const confirmPassword = document.getElementById('ConPassInput').value;
+
+            if (password !== confirmPassword) {
+                alert('รหัสผ่านและการยืนยันรหัสผ่านไม่ตรงกัน');
+                event.preventDefault(); // ป้องกันการส่งฟอร์ม
+            }
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
-            // เช็คข้อความเตือนจาก session
             const urlParams = new URLSearchParams(window.location.search);
+            
             if (urlParams.get('error') === 'email_exists') {
                 document.getElementById('error-message').innerHTML = '*อีเมลนี้ถูกใช้แล้ว กรุณาใช้อีเมลอื่น';
                 alert('*อีเมลนี้ถูกใช้แล้ว กรุณาใช้อีเมลอื่น');

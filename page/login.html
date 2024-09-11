@@ -14,8 +14,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500&display=swap" rel="stylesheet">
-    <!-- load -->
-    <script src="../load/load-navbar.js"></script>
+     <!-- load -->
+     <script src="../load/load-navbar.js"></script>
     <title>บูธเกษตรแฟร์</title>
     <style>
         body {
@@ -35,30 +35,38 @@
             </a>
 
             <center>
-                    <br><h3>ลงชื่อเข้าใช้</h3></center>
-            <form>          
-                <div class="mb-4">
+                <br><h3>ลงชื่อเข้าใช้</h3></center>
+            <form action="login.php" method="POST">          
+                <div class="mb-3">
                   <label for="exampleInputEmail1" class="form-label">Email</label>
-                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  <input type="email" class="form-control" id="exampleInputEmail1" name="email" required>
                 </div>
-                <div class="mb-4">
+                <div class="mb-1">
                   <label for="exampleInputPassword1" class="form-label">Password</label>
-                  <input type="password" class="form-control" id="exampleInputPassword1">
-                  <p></p>
-                  <p style="text-align: end;">ลืมรหัสผ่าน?<a href=""> คลิ๊ก</a></p>
+                  <input type="password" class="form-control" id="exampleInputPassword1" name="password" required>
+                  <p style="text-align: end;">ลืมรหัสผ่าน?<a href="#"> คลิ๊ก</a></p>
                 </div>
+                
                 <center>
+                    <div id="error-message" class="mb-2" style="color: brown;"> </div>
                     <div class="mb-2">
-                        <button type="submit" class="btn buttom-costum w-50" >เข้าสู่ระบบ</button>
+                        <button type="submit" class="btn buttom-costum w-50">เข้าสู่ระบบ</button>
                     </div>
                     <p>ต้องการสมัครสมาชิก?<a href="register.html"> สมัครสมาชิก</a></p>
                 </center>
-               
-                
             </form>
             <br><br>
         </div>
     </div>
-     
+    <script>
+      
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            if (urlParams.get('error') === 'invalid_password') {
+                document.getElementById('error-message').innerHTML = '*อีเมลหรือรหัสผ่านไม่ถูกต้อง';
+            }
+        });
+    </script>
 </body>
 </html>
