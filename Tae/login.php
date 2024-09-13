@@ -3,9 +3,9 @@ session_start(); // เริ่มต้น session
 
 // เชื่อมต่อฐานข้อมูล
 $servername = "151.106.124.154";
-$username = "u583789277_wag19";
-$password = "2567Inspire";
-$dbname = "u583789277_wag19";
+$username = "u583789277_wag20";
+$password = "2567Knock";
+$dbname = "u583789277_wag20";;
 
 // เชื่อมต่อฐานข้อมูล
 $conn = new mysqli($servername, $username, $password, $dbname);
