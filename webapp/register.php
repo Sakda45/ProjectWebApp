@@ -10,16 +10,17 @@ $dbname = "u583789277_wag19";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// ตรวจสอบการเชื่อมต่อ
+// ตรวจสอบการเชื่อมต่อฐานข้อมูล
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die(json_encode(["status" => "error", "message" => "Connection failed: " . $conn->connect_error]));
 }
 
-// อ่านข้อมูล JSON ที่ส่งมา
+// รับข้อมูล JSON ที่ส่งมา
 $input = file_get_contents('php://input');
 $data = json_decode($input, true);
 
 // รับข้อมูลจาก JSON
+$prefix = $data['prefix'];
 $name = $data['name'];
 $lastname = $data['lastname'];
 $phone = $data['phone'];
@@ -30,6 +31,7 @@ $confirmPassword = $data['confirm_password'] ?? '';
 // ตรวจสอบว่ารหัสผ่านกับยืนยันรหัสผ่านตรงกันหรือไม่
 if ($password !== $confirmPassword) {
     echo json_encode(["status" => "error_password_mismatch"]);
+    exit();
 }
 
 // ตรวจสอบว่ามีอีเมลนี้อยู่ในฐานข้อมูลหรือไม่
@@ -41,11 +43,12 @@ $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
     echo json_encode(["status" => "error_email_exists"]);
+    exit();
 } else {
     $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-    $sql = "INSERT INTO users (name, lastname, phone, email, password) VALUES (?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO users (prefix, name, lastname, phone, email, password) VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssss", $name, $lastname, $phone, $email, $hashedPassword);
+    $stmt->bind_param("ssssss", $prefix, $name, $lastname, $phone, $email, $hashedPassword);
 
     if ($stmt->execute()) {
         echo json_encode(["status" => "success"]);
@@ -56,5 +59,4 @@ if ($result->num_rows > 0) {
 
 $stmt->close();
 $conn->close();
-
 ?>

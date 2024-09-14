@@ -1,11 +1,12 @@
 <?php
-session_start(); // เริ่ม session
+// เริ่ม session
+session_start(); 
 
 // เชื่อมต่อฐานข้อมูล
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "pj_webapp";
+$servername = "151.106.124.154";
+$username = "u583789277_wag19";
+$password = "2567Inspire";
+$dbname = "u583789277_wag19";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -14,16 +15,21 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// รับข้อมูลจากฟอร์ม
-$name = $_POST['name'];
-$lastname = $_POST['lastname'];
-$phone = $_POST['phone'];
-$email = $_POST['email'];
-$password = $_POST['password'];
-$confirmPassword = $_POST['confirm_password'];
+// อ่านข้อมูล JSON ที่ส่งมา
+$input = file_get_contents('php://input');
+$data = json_decode($input, true);
+
+// รับข้อมูลจาก JSON
+$name = $data['name'];
+$lastname = $data['lastname'];
+$phone = $data['phone'];
+$email = $data['email'];
+$password = $data['password'];
+$confirmPassword = $data['confirm_password'] ?? '';
 
 // ตรวจสอบว่ารหัสผ่านกับยืนยันรหัสผ่านตรงกันหรือไม่
 if ($password !== $confirmPassword) {
+    echo json_encode(["status" => "error_password_mismatch"]);
     $_SESSION['error'] = 'password_mismatch';
     header("Location: register.html?error=password_mismatch");
     exit();
@@ -37,30 +43,24 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
+    echo json_encode(["status" => "error_email_exists"]);
     // ส่งผู้ใช้กลับไปยังหน้า register พร้อมกับ query string ที่บอกว่าอีเมลซ้ำ
     header("Location: register.html?error=email_exists");
     exit();
 } else {
-    // แฮชรหัสผ่านหลังจากการตรวจสอบความถูกต้อง
     $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-
-    // สร้าง SQL query
     $sql = "INSERT INTO users (name, lastname, phone, email, password) VALUES (?, ?, ?, ?, ?)";
-
-    // เตรียม statement
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sssss", $name, $lastname, $phone, $email, $hashedPassword);
 
-    // Execute statement
     if ($stmt->execute()) {
-        header("Location: login.html");
-        exit();
+        echo json_encode(["status" => "success"]);
     } else {
-        echo "Error: " . $stmt->error;
+        echo json_encode(["status" => "error", "message" => $stmt->error]);
     }
 }
 
-// ปิด statement และการเชื่อมต่อ
 $stmt->close();
 $conn->close();
+
 ?>
