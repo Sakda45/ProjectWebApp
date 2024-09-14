@@ -1,0 +1,10 @@
+{
+    "id": "20",
+    "booth_name": "Premium Booth",
+    "booth_size": "5x5",
+    "status": "active",
+    "price": "2000",
+    "image_url": "http://example.com/images/booth_new.jpg",
+    "zone_id": "3"
+  }
+  
