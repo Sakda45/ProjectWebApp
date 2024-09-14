@@ -1,0 +1,9 @@
+{
+    "booth_name": "C2",
+    "booth_size": "2x2",
+    "status": "available",
+    "price": "2000",
+    "image_url": "https://example.com/image.jpg",
+    "zone_id": 3
+  }
+  
