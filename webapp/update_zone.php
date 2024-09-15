@@ -22,19 +22,20 @@ if ($_SERVER["REQUEST_METHOD"] == "PUT") {
     $data = json_decode(file_get_contents('php://input'), true);
 
     // ตรวจสอบว่าค่าที่ต้องการถูกส่งมาครบหรือไม่
-    if (!isset($data['id']) || !isset($data['zone_name']) || !isset($data['num_booths'])) {
+    if (!isset($data['id']) || !isset($data['zone_name'])) {
         echo json_encode(["status" => "error", "message" => "Missing required fields"]);
         exit();
     }
 
     // รับค่า JSON
-    $id = $data['id'];
-    $zone_name = $data['zone_name'];
-    $num_booths = $data['num_booths'];
+$id = $data['id'];
+$zone_name = $data['zone_name'];
+$zone_description = $data['zone_description'];
+$event_id = $data['event_id'];
 
-    // เตรียมคำสั่ง SQL สำหรับการแก้ไขข้อมูล
-    $stmt = $conn->prepare("UPDATE zones SET zone_name = ?, num_booths = ? WHERE id = ?");
-    $stmt->bind_param("sii", $zone_name, $num_booths, $id);
+// เตรียมคำสั่ง SQL สำหรับการแก้ไขข้อมูล
+$stmt = $conn->prepare("UPDATE zones SET zone_name = ?, zone_description = ?, event_id = ? WHERE id = ?");
+$stmt->bind_param("ssii", $zone_name, $zone_description, $event_id, $id);
 
     // รัน query
     if ($stmt->execute()) {

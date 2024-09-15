@@ -28,11 +28,12 @@ if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
         $members[] = [
             "id" => $row["id"],
+            "prefix" => $row["prefix"],
             "name" => $row["name"],
             "lastname" => $row["lastname"],
             "phone" => $row["phone"],
-            "email" => $row["email"],
-            "prefix" => $row["prefix"]
+            "email" => $row["email"]
+            
         ];
     }
     

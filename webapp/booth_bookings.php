@@ -22,7 +22,8 @@ $sql = "SELECT CONCAT(u.name, ' ', u.lastname) AS fullname, z.zone_name, b.price
         FROM bookings bk
         JOIN users u ON u.id = bk.user_id
         JOIN booth b ON b.id = bk.booth_id
-        JOIN zones z ON z.id = b.zone_id";
+        JOIN zones z ON z.id = b.zone_id
+        WHERE bk.status = 'pending_payment' OR bk.status = 'pending'  OR bk.status = 'confirmed'";
 
 $result = $conn->query($sql);
 

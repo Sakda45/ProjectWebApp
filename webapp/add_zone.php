@@ -15,18 +15,17 @@ if ($conn->connect_error) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data = json_decode(file_get_contents('php://input'), true);
-    if (!isset($data['zone_name']) || !isset($data['zone_description']) || !isset($data['num_booths']) || !isset($data['event_id'])) {
+    if (!isset($data['zone_name']) || !isset($data['zone_description']) || !isset($data['event_id'])) {
         echo json_encode(["status" => "error", "message" => "Missing required fields"]);
         exit();
     }
 
     $zone_name = $data['zone_name'];
     $zone_description = $data['zone_description'];
-    $num_booths = $data['num_booths'];
     $event_id = $data['event_id'];
 
-    $stmt = $conn->prepare("INSERT INTO zones (zone_name, zone_description, num_booths, event_id) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("ssii", $zone_name, $zone_description, $num_booths, $event_id);
+    $stmt = $conn->prepare("INSERT INTO zones (zone_name, zone_description, event_id) VALUES (?, ?, ?)");
+    $stmt->bind_param("ssi", $zone_name, $zone_description, $event_id);
 
     if ($stmt->execute()) {
         echo json_encode(["status" => "success", "message" => "Zone added successfully"]);

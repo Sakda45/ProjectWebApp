@@ -22,17 +22,17 @@ if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
     $data = json_decode(file_get_contents('php://input'), true);
 
     // ตรวจสอบว่า zone_id ถูกส่งมาหรือไม่
-    if (!isset($data['zone_id'])) {
+    if (!isset($data['zone_name'])) {
         echo json_encode(["status" => "error", "message" => "Zone ID is required"]);
         exit();
     }
 
     // รับ zone_id
-    $zone_id = $data['zone_id'];
+    $zone_name = $data['zone_name'];
 
     // เตรียมคำสั่ง SQL สำหรับการลบข้อมูล
-    $stmt = $conn->prepare("DELETE FROM zones WHERE id = ?");
-    $stmt->bind_param("i", $zone_id);
+    $stmt = $conn->prepare("DELETE FROM zones WHERE zone_name = ?");
+    $stmt->bind_param("s", $zone_name);
 
     // รัน query
     if ($stmt->execute()) {

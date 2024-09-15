@@ -22,17 +22,17 @@ if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
     $data = json_decode(file_get_contents('php://input'), true);
 
     // ตรวจสอบว่า booth_id ถูกส่งมาหรือไม่
-    if (!isset($data['id'])) {
+    if (!isset($data['booth_name'])) {
         echo json_encode(["status" => "error", "message" => "Booth ID is required"]);
         exit();
     }
 
     // รับ booth_id
-    $id = $data['id'];
+    $booth_name = $data['booth_name'];
 
     // เตรียมคำสั่ง SQL สำหรับการลบข้อมูล
-    $stmt = $conn->prepare("DELETE FROM booth WHERE id = ?");
-    $stmt->bind_param("i", $id);
+    $stmt = $conn->prepare("DELETE FROM booth WHERE booth_name = ?");
+    $stmt->bind_param("s", $booth_name);
 
     // รัน query
     if ($stmt->execute()) {
